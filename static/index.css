@@ -1,0 +1,18 @@
+* {
+  image-rendering: pixelated;
+}
+
+body {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+  color: white;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: #323C39;
+}
+
+div.scene {
+  margin: auto;
+  width: 50%;
+  position: absolute;
+}

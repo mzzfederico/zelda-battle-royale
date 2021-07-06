@@ -8,10 +8,11 @@ export default class Collision extends System {
     checkCurrentCollisions(entities) {
         const collisionsDetected = [];
 
-        const entitiesWithCollidors = entities.filter(target => target.components.collider && !target.isDisabled); /* Check only collidors */
+        const entitiesWithCollidors = entities.filter(target => target.components.collider && !target.isDisabled); /* Check only colliders & enabled ones*/
 
         entitiesWithCollidors.forEach(
             ({ id, components }) => entitiesWithCollidors
+                .filter(target => target.id !== id)
 
                 .forEach(target => {
                     const collisionOccurred = this.checkCollision(
@@ -29,7 +30,7 @@ export default class Collision extends System {
     }
 
     checkCollision(a, b) {
-        //console.log({ a, b })
+        //if (a.id === "wall") console.log(a, b);
         if (a.position.x < (b.position.x + b.collider.width) &&
             (a.position.x + a.collider.width) > b.position.x &&
             a.position.y < (b.position.y + b.collider.height) &&

@@ -1,11 +1,11 @@
 import Component from ".";
 
-export default class ComponentSprite extends Component {
+export default class Sprite extends Component {
     src: string;
     width: number;
     height: number;
 
-    constructor({ src, width = 16, height = 16 }) {
+    constructor({ src, width = 1, height = 1 }) {
         super({ name: "sprite" });
 
         this.src = src;

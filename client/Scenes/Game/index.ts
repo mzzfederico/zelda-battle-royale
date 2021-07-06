@@ -10,7 +10,9 @@ import Wall from "../../Objects/Wall";
 import SystemHealthMeter from "../../Systems/SystemHealthMeter";
 import SystemCoinMeter from "../../Systems/SystemCoinMeter";
 import SystemCollision from "../../@core/Systems/Collision.System";
+import InputManager from "../../@core/Systems/Input.System";
 import Coin from "../../Objects/Coin";
+import MovementSystem from "../../@core/Systems/Movement.System";
 
 export default function Game(): void {
     const player = new Player({ spawn: { x: 3, y: 3 } });
@@ -21,7 +23,7 @@ export default function Game(): void {
         new Wall({ side: "e", id: "wallE", x: ROOM_WIDTH - 1, y: 1, length: ROOM_WIDTH - 2 }),
         new Wall({ side: "s", id: "wallS", hasCorners: true, x: 0, y: ROOM_HEIGHT - 1, length: ROOM_WIDTH })
     ];
-    const coin = new Coin({ x: 4, y: 4 });
+    const coin = new Coin({ x: 10, y: 4 });
 
     /*
 
@@ -35,11 +37,16 @@ export default function Game(): void {
     const coinMeter = new SystemCoinMeter();
     const healthMeter = new SystemHealthMeter();
     const spriteRendering = new SystemSpriteRenderer();
-    const movement = new SystemPlayerMovement();
     const collisions = new SystemCollision();
+    const input = new InputManager();
     const canvas = new SystemCanvas(ROOM_WIDTH * TILE_SIZE, ROOM_HEIGHT * TILE_SIZE);
+    const movement = new MovementSystem();
 
-    const game = new Scene("root", [player, room, coin, ...walls], [canvas, spriteRendering, movement, healthMeter, coinMeter, collisions]);
+    const game = new Scene(
+        "root",
+        [player, room, coin, ...walls],
+        [canvas, spriteRendering, healthMeter, coinMeter, movement, collisions, input]
+    );
 
     console.log(game);
 

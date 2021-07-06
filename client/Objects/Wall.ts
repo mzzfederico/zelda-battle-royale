@@ -1,3 +1,4 @@
+import Collider from "../@core/Components/Collider.Component";
 import Tilemap from "../@core/Components/Tilemap.Component";
 import Entity from "../@core/Entities";
 import BricksTileset from "../Tilesets/bricks";
@@ -44,6 +45,7 @@ export default class Wall extends Entity {
             );
 
         this.addComponent(new Tilemap(BricksTileset, wallTileMap));
+        this.addComponent(new Collider({ width, height, isRigid: true }));
     }
 }
 

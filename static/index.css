@@ -9,10 +9,12 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background: #323C39;
+  margin: 0;
 }
 
 div.scene {
-  margin: auto;
+  display: relative;
+  margin: 32px;
   width: 50%;
   position: absolute;
 }

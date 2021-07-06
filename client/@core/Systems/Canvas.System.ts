@@ -3,7 +3,7 @@ import { ZOOM } from "../../constants";
 
 import { drawTileMap } from "../Utils/canvasRendering";
 
-export default class SystemCanvas extends System {
+export default class CanvasRenderer extends System {
     height: number = 300;
     width: number = 150;
     ctx: CanvasRenderingContext2D;

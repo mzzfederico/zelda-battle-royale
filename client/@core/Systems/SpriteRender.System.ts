@@ -1,7 +1,7 @@
 import System from ".";
 import { TILE_SIZE, ZOOM } from "../../constants";
 
-export default class SystemSpriteRenderer extends System {
+export default class SpriteRenderer extends System {
     update(time, entities): void {
         /* Runs the system on each frame */
         entities
@@ -22,8 +22,6 @@ export default class SystemSpriteRenderer extends System {
                 const { id, components } = entity;
                 const sprite = document.createElement("img");
 
-                sprite.style.position = 'absolute';
-
                 this.updateSprite(sprite, components, id);
                 document.body.append(sprite);
             });
@@ -34,11 +32,13 @@ export default class SystemSpriteRenderer extends System {
         const { x, y } = components.position;
         const { src, width, height } = components.sprite;
 
+        sprite.style.position = 'absolute';
+
         sprite.style.left = `${Math.floor(x * ZOOM * TILE_SIZE)}px`;
         sprite.style.top = `${Math.floor(y * ZOOM * TILE_SIZE)}px`;
 
-        sprite.style.width = `${Math.floor(width * ZOOM)}px`;
-        sprite.style.height = `${Math.floor(height * ZOOM)}px`;
+        sprite.style.width = `${Math.floor(width * ZOOM * TILE_SIZE)}px`;
+        sprite.style.height = `${Math.floor(height * ZOOM * TILE_SIZE)}px`;
         sprite.style.display = "block";
 
         sprite.src = src;

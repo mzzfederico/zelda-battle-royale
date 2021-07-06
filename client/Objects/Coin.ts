@@ -8,8 +8,10 @@ export default class Coin extends Entity {
     constructor({ x = 3, y = 3 }) {
         super({ id: "coin", x, y });
 
-        const coinSprite = new Sprite({ src: coin, height: 8, width: 5 });
-        const coinCollider = new Collider({ height: 8, width: 5, isStatic: false });
+        const [width, height] = [0.3, 0.5];
+
+        const coinSprite = new Sprite({ src: coin, width, height });
+        const coinCollider = new Collider({ width, height, isStatic: false });
         this.addComponent(coinSprite);
         this.addComponent(coinCollider);
     }

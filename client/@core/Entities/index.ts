@@ -13,8 +13,13 @@ export default class Entity {
         this.addComponent(new Position({ x, y }));
     }
 
+    getComponent(componentName) {
+        return this.components[componentName];
+    }
+
     addComponent(component): Entity {
         this.components[component.name] = component;
+        component.registerParentEntity(this);
         return this;
     }
 

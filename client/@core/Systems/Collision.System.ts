@@ -6,14 +6,13 @@ export default class Collision extends System {
     }
 
     checkCurrentCollisions(entities) {
-        const collisionsDetected = [];
-
-        const entitiesWithCollidors = entities.filter(target => target.components.collider && !target.isDisabled); /* Check only colliders & enabled ones*/
+        /* Check only colliders & enabled ones*/
+        const entitiesWithCollidors = entities
+            .filter(target => target.components.collider && !target.isDisabled);
 
         entitiesWithCollidors.forEach(
             ({ id, components }) => entitiesWithCollidors
                 .filter(target => target.id !== id)
-
                 .forEach(target => {
                     const collisionOccurred = this.checkCollision(
                         components,
@@ -25,8 +24,6 @@ export default class Collision extends System {
                     }
                 })
         )
-
-        return collisionsDetected;
     }
 
     checkCollision(a, b) {

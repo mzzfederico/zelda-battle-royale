@@ -1,4 +1,4 @@
-import Game from "./Scenes/Game";
+import Gameplay from "./Scenes/Gameplay";
 
 document.addEventListener('readystatechange', event => {
     // When HTML/DOM elements are ready:
@@ -8,6 +8,6 @@ document.addEventListener('readystatechange', event => {
 
     // When window loaded ( external resources are loaded too- `css`,`src`, etc...)
     if (event.target.readyState === "complete") {
-        Game();
+        new Gameplay();
     }
 });

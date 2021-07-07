@@ -15,7 +15,7 @@ import Movement from "../@core/Components/Movement.Component";
 export default class Player extends Entity {
     spriteDirections = { n, w, e, s };
 
-    playerSpeed = 0.007;
+    playerSpeed = 0.0035;
 
     constructor({ spawn = { x: 0, y: 0 } }: IPlayerProps) {
         super({ id: "player", x: spawn.x, y: spawn.y });
@@ -44,10 +44,10 @@ export default class Player extends Entity {
     }
 
     handleMovement(direction) {
-        if (direction === "n") this.getComponent('movement').setSpeed(0, -this.playerSpeed);
-        if (direction === "s") this.getComponent('movement').setSpeed(0, this.playerSpeed);
-        if (direction === "w") this.getComponent('movement').setSpeed(-this.playerSpeed, 0);
-        if (direction === "e") this.getComponent('movement').setSpeed(this.playerSpeed, 0);
+        if (direction === "n") this.getComponent('movement').addSpeed(0, -this.playerSpeed);
+        if (direction === "s") this.getComponent('movement').addSpeed(0, this.playerSpeed);
+        if (direction === "w") this.getComponent('movement').addSpeed(-this.playerSpeed, 0);
+        if (direction === "e") this.getComponent('movement').addSpeed(this.playerSpeed, 0);
         this.getComponent("sprite").replaceSource(this.spriteDirections[direction]);
     }
 

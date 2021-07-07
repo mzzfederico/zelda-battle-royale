@@ -2,7 +2,7 @@ import Tilemap from "../@core/Components/Tilemap.Component";
 import Entity from "../@core/Entities";
 import BricksTileset from "../Tilesets/bricks";
 
-export default class Room extends Entity {
+export default class Floor extends Entity {
     constructor() {
         super({ id: "room" });
 

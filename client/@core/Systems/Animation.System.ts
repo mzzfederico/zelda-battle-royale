@@ -11,13 +11,21 @@ export default class AnimationSystem extends System {
                 (entity: Entity): void => {
                     const animation: SpriteAnimation = entity.getComponent("spriteAnimation");
                     const sprite: Sprite = entity.getComponent("sprite");
-
-                    animation.updateTime(time / 1000);
-
                     const currentState: SpriteAnimationState = animation.getState();
-                    if (animation.animationTime > currentState.interval || animation.stale) {
-                        sprite.replaceSource(animation.getNextFrame());
+
+                    /* Update animation clock and steps */
+                    animation.updateTime(time);
+                    if (animation.animationTime > currentState.interval) {
+                        animation.updateStep();
                         animation.clearTime();
+                    }
+
+                    /* Update sprite source on frame change */
+                    const currentSrc = sprite.src;
+                    const currentFrame = animation.getCurrentFrame();
+
+                    if (currentSrc !== currentFrame) {
+                        sprite.replaceSource(currentFrame);
                     }
                 }
             )

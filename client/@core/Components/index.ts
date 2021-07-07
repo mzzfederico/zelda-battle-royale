@@ -1,12 +1,12 @@
 export default class Component {
     name: string;
-    parentEntity: Object;
+    entityId: string;
 
     constructor({ name }) {
         this.name = name;
     }
 
-    registerParentEntity(parent) {
-        this.parentEntity = parent;
+    registerEntityId(id: string): void {
+        this.entityId = id;
     }
 }

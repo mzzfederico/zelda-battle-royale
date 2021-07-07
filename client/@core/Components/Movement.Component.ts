@@ -4,10 +4,12 @@ export default class Movement extends Component {
     x: number;
     y: number;
 
-    constructor({ x, y }) {
+    constructor({ x, y, onStart = () => { }, onStop = () => { } }) {
         super({ name: "movement" });
         this.x = x;
         this.y = y;
+        this.onStart = onStart;
+        this.onStop = onStop;
     }
 
     addSpeed(x, y) {
@@ -28,5 +30,9 @@ export default class Movement extends Component {
     clearSpeed() {
         this.x = 0;
         this.y = 0;
+    }
+
+    isMoving() {
+        return this.x === 0 && this.y === 0;
     }
 }

@@ -6,7 +6,7 @@ import Player from "../../Objects/Player";
 import Floor from "../../Objects/Floor";
 import SystemCanvas from "../../@core/Systems/Canvas.System";
 import Wall from "../../Objects/Wall";
-import SystemHealthMeter from "../../Systems/SystemHealthMeter";
+import SystemDebugPlayer from "../../Systems/SystemDebugPlayer";
 import SystemCoinMeter from "../../Systems/SystemCoinMeter";
 import SystemCollision from "../../@core/Systems/Collision.System";
 import InputManager from "../../@core/Systems/Input.System";
@@ -31,7 +31,6 @@ export default class Gameplay extends Scene {
         //const doorwayW = new Doorway({ id: "doorway_w", x: 0, y: (ROOM_HEIGHT - 2) / 2 });
 
         const coinMeter = new SystemCoinMeter();
-        const healthMeter = new SystemHealthMeter();
         const spriteRendering = new SystemSpriteRenderer();
         const collisions = new SystemCollision();
         const input = new InputManager();
@@ -39,8 +38,11 @@ export default class Gameplay extends Scene {
         const movement = new MovementSystem();
         const animation = new AnimationSystem();
 
+        /* To be disabled... */
+        const debug = new SystemDebugPlayer();
+
         [player, floor, coin, ...walls].forEach(this.addEntity);
-        [canvas, spriteRendering, healthMeter, coinMeter, movement, collisions, input, animation].forEach(this.addSystem);
+        [canvas, spriteRendering, coinMeter, movement, collisions, input, animation, debug].forEach(this.addSystem);
 
         this.start();
 

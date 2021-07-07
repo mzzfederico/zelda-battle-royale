@@ -20,7 +20,7 @@ export default class Entity {
 
     addComponent(component: Component): Entity {
         this.components[component.name] = component;
-        component.registerParentEntity(this);
+        component.registerEntityId(this.id);
         return this;
     }
 

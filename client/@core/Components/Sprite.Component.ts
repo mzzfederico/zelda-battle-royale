@@ -13,7 +13,7 @@ export default class Sprite extends Component {
         this.height = height;
     }
 
-    replaceSource(src) {
-        this.src = src;
+    replaceSource(src: string): void {
+        if (src) this.src = src;
     }
 }

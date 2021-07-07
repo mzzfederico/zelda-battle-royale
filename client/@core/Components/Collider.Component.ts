@@ -21,17 +21,11 @@ export default class Collider extends Component {
         this.onCollision = onCollision;
     }
 
-    registerParentEntity(parent) {
-        this.parentEntity = parent;
-        this.updateSafePosition();
-    }
-
-    updateSafePosition() {
-        const { x, y } = this.parentEntity.getComponent("position");
+    saveSafePosition(x: number, y: number): void {
         this.safePosition = { x, y };
     }
 
-    restoreSafePosition() {
-        this.parentEntity.getComponent("position").setPosition(this.safePosition.x, this.safePosition.y);
+    getSafePosition(): Object {
+        return this.safePosition;
     }
 }

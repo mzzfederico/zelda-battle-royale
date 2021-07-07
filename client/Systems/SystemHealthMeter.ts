@@ -15,6 +15,6 @@ export default class SystemHealthMeter extends System {
     start() {
         const meter = document.createElement("div");
         meter.setAttribute("id", "player-health-meter");
-        document.body.append(meter);
+        document.getElementById("root").append(meter);
     }
 }

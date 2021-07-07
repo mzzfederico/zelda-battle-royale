@@ -1,24 +1,17 @@
 import Tilemap from "../@core/Components/Tilemap.Component";
 import Entity from "../@core/Entities";
+import { ROOM_HEIGHT, ROOM_WIDTH } from "../constants";
 import BricksTileset from "../Tilesets/bricks";
 
 export default class Floor extends Entity {
     constructor() {
-        super({ id: "room" });
+        super({ id: "floor" });
 
-        const emptyMap = ([
-            [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1],
-            [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1],
-            [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1],
-            [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1],
-            [-1, -1, 8, 9, 10, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1],
-            [-1, -1, 19, 20, 21, -1, -1, 8, 9, 10, -1, -1, -1, -1, -1, -1],
-            [-1, -1, 30, 31, 32, -1, -1, 19, 20, 21, -1, -1, -1, -1, -1, -1],
-            [-1, -1, -1, -1, -1, -1, -1, 30, 31, 32, -1, -1, -1, -1, -1, -1],
-            [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1],
-            [-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1],
-        ]);
+        /* Empty space */
+        const tileRow = new Array(ROOM_WIDTH).fill(-1);
+        const rows = new Array(ROOM_HEIGHT).fill(tileRow);
+        /* Corners */
 
-        this.addComponent(new Tilemap(BricksTileset, emptyMap));
+        this.addComponent(new Tilemap(BricksTileset, rows));
     }
 }

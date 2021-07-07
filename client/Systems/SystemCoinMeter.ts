@@ -15,6 +15,6 @@ export default class SystemCoinMeter extends System {
     start() {
         const meter = document.createElement("div");
         meter.setAttribute("id", "player-coins-meter");
-        document.body.append(meter);
+        document.getElementById("root").append(meter);
     }
 }

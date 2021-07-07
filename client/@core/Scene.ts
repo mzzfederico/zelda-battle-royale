@@ -14,6 +14,23 @@ export default class Scene {
         return this;
     }
 
+    addEntity = (newEntity: Entity): void => {
+        this.entities.push(newEntity);
+    }
+
+    removeEntity = (EntityId: string): void => {
+        this.entities.filter(entity => entity.id !== EntityId);
+    }
+
+
+    addSystem = (newSystem: System): void => {
+        this.systems.push(newSystem);
+    }
+
+    removeSystem = (SystemId: string): void => {
+        this.systems.filter(system => system.id !== SystemId);
+    }
+
     update = (progress: number): void => {
         // Update the state of the world for the elapsed time since last render
         //console.log("update");

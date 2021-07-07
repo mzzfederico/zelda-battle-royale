@@ -16,14 +16,12 @@ const cornerTiles = {
 }
 
 export default class Wall extends Entity {
-    hasCorners: boolean = false;
     side: string = "n";
 
-    constructor({ id = "wall", side, hasCorners = false, x = 0, y = 0, length = 1 }: IWallProps) {
+    constructor({ id = "wall", side, x = 0, y = 0, length = 1 }: IWallProps) {
         super({ id, x, y });
 
         this.side = side;
-        this.hasCorners = hasCorners;
 
         let width = 1;
         let height = 1;
@@ -32,16 +30,7 @@ export default class Wall extends Entity {
 
         const wallTileMap = (new Array(height))
             .fill(
-                (new Array(width)).fill(tilesPerDirection[side]).map((tile, index, wallArray) => {
-                    if (!hasCorners) return tile;
-
-                    if (side in cornerTiles) {
-                        if (index === 0) return cornerTiles[side][0];
-                        if (index === (wallArray.length - 1)) return cornerTiles[side][1];
-                        return tile;
-                    }
-                    return tile;
-                })
+                (new Array(width)).fill(tilesPerDirection[side])
             );
 
         this.addComponent(new Tilemap(BricksTileset, wallTileMap));
@@ -52,7 +41,6 @@ export default class Wall extends Entity {
 interface IWallProps {
     id: string;
     side: string;
-    hasCorners?: boolean;
     x?: number;
     y?: number;
     length?: number;

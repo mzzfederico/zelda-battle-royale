@@ -1,3 +1,4 @@
+import Component from "../Components";
 import Position from "../Components/Position.Component";
 
 export default class Entity {
@@ -13,17 +14,17 @@ export default class Entity {
         this.addComponent(new Position({ x, y }));
     }
 
-    getComponent(componentName) {
+    getComponent(componentName: string): Component {
         return this.components[componentName];
     }
 
-    addComponent(component): Entity {
+    addComponent(component: Component): Entity {
         this.components[component.name] = component;
         component.registerParentEntity(this);
         return this;
     }
 
-    removeComponent(component): Entity {
+    removeComponent(component: Component): Entity {
         delete this.components[component.name];
         return this;
     }

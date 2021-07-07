@@ -1,0 +1,17 @@
+{
+    "compilerOptions": {
+        "module": "commonjs",
+        "target": "es2020",
+        "jsx": "preserve",
+        "outFile": "./dist/client.dist.js",
+        "strictFunctionTypes": true,
+        "sourceMap": true,
+    },
+    "include": [
+        "client/**/*"
+    ],
+    "exclude": [
+        "node_modules",
+        "**/node_modules/*"
+    ]
+}

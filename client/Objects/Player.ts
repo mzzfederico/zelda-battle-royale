@@ -11,6 +11,7 @@ import Coins from "../Components/Coins.Component";
 import Collider from "../@core/Components/Collider.Component";
 import Input from "../@core/Components/Input.Component";
 import Movement from "../@core/Components/Movement.Component";
+import SpriteAnimation from "../@core/Components/SpriteAnimation.Component";
 
 export default class Player extends Entity {
     spriteDirections = { n, w, e, s };
@@ -25,6 +26,17 @@ export default class Player extends Entity {
         const coins = new Coins(0);
         const collider = new Collider({ width: 1, height: 1, isStatic: false, onCollision: this.handleCollision.bind(this) });
         const movement = new Movement({ x: 0, y: 0 });
+        const animation = new SpriteAnimation([
+            { name: 'standing_n', frames: [n], interval: 0.7, nextState: 'standing_n' },
+            { name: 'standing_s', frames: [s], interval: 0.7, nextState: 'standing_s' },
+            { name: 'standing_e', frames: [e], interval: 0.7, nextState: 'standing_e' },
+            { name: 'standing_w', frames: [w], interval: 0.7, nextState: 'standing_w' },
+            { name: 'walking_n', frames: [n, s], interval: 0.7, nextState: 'standing_n' },
+            { name: 'walking_s', frames: [e, w], interval: 0.7, nextState: 'standing_s' },
+            { name: 'walking_e', frames: [s, e], interval: 0.7, nextState: 'standing_e' },
+            { name: 'walking_w', frames: [w, n], interval: 0.7, nextState: 'standing_w' },
+        ], "standing_s");
+        this.addComponent(animation);
         this.addComponent(sprite);
         this.addComponent(health);
         this.addComponent(coins);
@@ -44,11 +56,15 @@ export default class Player extends Entity {
     }
 
     handleMovement(direction) {
-        if (direction === "n") this.getComponent('movement').addSpeed(0, -this.playerSpeed);
-        if (direction === "s") this.getComponent('movement').addSpeed(0, this.playerSpeed);
-        if (direction === "w") this.getComponent('movement').addSpeed(-this.playerSpeed, 0);
-        if (direction === "e") this.getComponent('movement').addSpeed(this.playerSpeed, 0);
-        this.getComponent("sprite").replaceSource(this.spriteDirections[direction]);
+        const animation: SpriteAnimation = this.getComponent("spriteAnimation");
+        const movement: SpriteAnimation = this.getComponent("movement");
+
+        animation.changeState(`walking_${direction}`);
+
+        if (direction === "n") movement.addSpeed(0, -this.playerSpeed);
+        if (direction === "s") movement.addSpeed(0, this.playerSpeed);
+        if (direction === "w") movement.addSpeed(-this.playerSpeed, 0);
+        if (direction === "e") movement.addSpeed(this.playerSpeed, 0);
     }
 
     handleCollision(target) {

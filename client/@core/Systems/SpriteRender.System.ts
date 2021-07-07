@@ -23,7 +23,7 @@ export default class SpriteRenderer extends System {
                 const sprite = document.createElement("img");
 
                 this.updateSprite(sprite, components, id);
-                document.body.append(sprite);
+                document.getElementById("root").append(sprite);
             });
     }
 

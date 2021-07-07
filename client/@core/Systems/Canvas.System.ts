@@ -20,7 +20,7 @@ export default class CanvasRenderer extends System {
 
     drawTilemapsFromEntities(entities) {
         entities
-            .filter(entity => entity.components.tilemap)
+            .filter(entity => entity.components.tilemap && entity.components.position)
             .forEach(
                 ({ id, components }) => {
                     const { tilemap, position } = components;
@@ -38,6 +38,6 @@ export default class CanvasRenderer extends System {
 
         this.drawTilemapsFromEntities(entities);
 
-        document.body.append(canvas);
+        document.getElementById("root").append(canvas);
     }
 }

@@ -14,7 +14,7 @@ export default class SpriteRenderer extends System {
             });
     }
 
-    start(entities): void {
+    start = (entities): void => {
         /* Runs the system on start */
         entities
             .filter(entity => entity.components.sprite)
@@ -27,7 +27,7 @@ export default class SpriteRenderer extends System {
             });
     }
 
-    updateSprite(sprite, components, id = "") {
+    updateSprite = (sprite, components, id = "") => {
         if (id) sprite.setAttribute("id", id);
         const { x, y } = components.position;
         const { src, width, height } = components.sprite;

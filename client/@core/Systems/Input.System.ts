@@ -20,8 +20,10 @@ export default class InputManager extends System {
 
     handleKeyEvent = (event): void => {
         const { key, type } = event;
-        if (type === "keydown") this.inputs[key].pressed = true;
-        if (type === "keyup") this.inputs[key].pressed = false;
+        if (key in this.inputs) {
+            if (type === "keydown") this.inputs[key].pressed = true;
+            if (type === "keyup") this.inputs[key].pressed = false;
+        }
     }
 
     destroy(): void {

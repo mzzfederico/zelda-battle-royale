@@ -1,4 +1,5 @@
 import Component from ".";
+import { roundFloat } from "../Utils/rounding";
 
 export default class SpriteAnimation extends Component {
     states: SpriteAnimationState[]
@@ -37,7 +38,7 @@ export default class SpriteAnimation extends Component {
 
     updateTime = (milliseconds: number): void => {
         if (isNaN(milliseconds)) return;
-        this.animationTime += milliseconds;
+        this.animationTime = roundFloat(this.animationTime + milliseconds, 1);
     }
 
     updateStep = (): void => {

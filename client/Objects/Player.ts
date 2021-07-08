@@ -1,4 +1,4 @@
-import Sprite from "../@core/Components/Sprite.Component";
+
 import Entity from "../@core/Entities";
 
 import Link_1 from "../Sprites/Link/1.png";
@@ -10,6 +10,8 @@ import Link_6 from "../Sprites/Link/6.png";
 import Link_7 from "../Sprites/Link/7.png";
 import Link_8 from "../Sprites/Link/8.png";
 
+import Position from "../@core/Components/Position.Component";
+import Sprite from "../@core/Components/Sprite.Component";
 import Health from "../Components/Health.Component";
 import Coins from "../Components/Coins.Component";
 import Collider from "../@core/Components/Collider.Component";
@@ -21,7 +23,7 @@ export default class Player extends Entity {
     playerSpeed = 0.0035;
 
     constructor({ spawn = { x: 0, y: 0 } }: IPlayerProps) {
-        super({ id: "player", x: spawn.x, y: spawn.y });
+        super({ tag: "player", x: spawn.x, y: spawn.y });
 
         const sprite = new Sprite({ src: Link_1, width: 1, height: 1 });
         const health = new Health(3);
@@ -75,7 +77,7 @@ export default class Player extends Entity {
     }
 
     handleCollision(target) {
-        if (target.id === "coin") {
+        if (target.tag === "coin") {
             this.getComponent("coins").earnCoins(1);
             target.setDisabled(true);
         }

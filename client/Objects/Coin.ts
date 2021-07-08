@@ -1,3 +1,5 @@
+import { v4 as uuidv4 } from 'uuid';
+
 import Collider from "../@core/Components/Collider.Component";
 import Sprite from "../@core/Components/Sprite.Component";
 import Entity from "../@core/Entities";
@@ -6,7 +8,7 @@ import coin from "../Sprites/coin/coin.png";
 
 export default class Coin extends Entity {
     constructor({ x = 3, y = 3 }) {
-        super({ id: "coin", x, y });
+        super({ id: uuidv4(), x, y, tag: "coin" });
 
         const [width, height] = [0.3, 0.5];
 

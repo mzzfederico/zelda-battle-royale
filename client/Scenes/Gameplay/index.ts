@@ -14,12 +14,15 @@ import MovementSystem from "../../@core/Systems/Movement.System";
 import Coin from "../../Objects/Coin";
 import Doorway from "../../Objects/Doorway";
 import AnimationSystem from "../../@core/Systems/Animation.System";
+import rollDice from "../../@core/Utils/dice";
 
 export default class Gameplay extends Scene {
     constructor() {
         super("root");
 
-        const player = new Player({ spawn: { x: 3, y: 3 } });
+        const randomPosition = () => ({ x: rollDice(2, ROOM_WIDTH - 2), y: rollDice(2, ROOM_HEIGHT - 2) });
+
+        const player = new Player({ spawn: randomPosition() });
         const floor = new Floor();
         const walls = [
             ...this.generateWall("n"),
@@ -27,7 +30,17 @@ export default class Gameplay extends Scene {
             ...this.generateWall("s"),
             ...this.generateWall("w")
         ];
-        const coin = new Coin({ x: 10, y: 4 });
+
+
+        const coins = [];
+
+        let i = 12;
+        while (i > 0) {
+            coins.push(
+                new Coin(randomPosition())
+            );
+            i--;
+        }
         //const doorwayW = new Doorway({ id: "doorway_w", x: 0, y: (ROOM_HEIGHT - 2) / 2 });
 
         const coinMeter = new SystemCoinMeter();
@@ -41,7 +54,7 @@ export default class Gameplay extends Scene {
         /* To be disabled... */
         const debug = new SystemDebugPlayer();
 
-        [player, floor, coin, ...walls].forEach(this.addEntity);
+        [player, floor, ...coins, ...walls].forEach(this.addEntity);
         [canvas, spriteRendering, coinMeter, movement, collisions, input, animation, debug].forEach(this.addSystem);
 
         this.start();

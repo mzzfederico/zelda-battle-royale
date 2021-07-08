@@ -1,4 +1,5 @@
 import Component from ".";
+import { roundFloat } from "../Utils/rounding";
 
 export default class Movement extends Component {
     x: number;
@@ -13,8 +14,8 @@ export default class Movement extends Component {
     }
 
     addSpeed(x, y) {
-        this.x = this.x + x;
-        this.y = this.y + y;
+        this.x = roundFloat(this.x + x, 100_000);
+        this.y = roundFloat(this.y + y, 100_000);
     }
 
     setSpeed(x, y) {
@@ -23,8 +24,8 @@ export default class Movement extends Component {
     }
 
     multiplySpeed(x, y) {
-        this.x = this.x * x;
-        this.y = this.y * y;
+        this.x = roundFloat(this.x * x, 100_000);
+        this.y = roundFloat(this.y * y, 100_000);
     }
 
     clearSpeed() {

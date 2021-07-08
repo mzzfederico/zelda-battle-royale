@@ -30,7 +30,6 @@ export default class MovementSystem extends System {
                 position.transformation(x * timeframe, y * timeframe);
                 movement.multiplySpeed(0.25, 0.25);
             })
-
     }
 }
 

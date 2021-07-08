@@ -5,12 +5,16 @@ import BricksTileset from "../Tilesets/bricks";
 
 export default class Floor extends Entity {
     constructor() {
-        super({ id: "floor" });
+        super({ tag: "floor" });
 
         /* Empty space */
-        const tileRow = new Array(ROOM_WIDTH).fill(-1);
-        const rows = new Array(ROOM_HEIGHT).fill(tileRow);
+        const rows = Array.from(Array(ROOM_HEIGHT), () => new Array(ROOM_WIDTH).fill(-1));
+
         /* Corners */
+        rows[0][0] = 0;
+        rows[0][ROOM_WIDTH - 1] = 2;
+        rows[ROOM_HEIGHT - 1][0] = 22;
+        rows[ROOM_HEIGHT - 1][ROOM_WIDTH - 1] = 24;
 
         this.addComponent(new Tilemap(BricksTileset, rows));
     }

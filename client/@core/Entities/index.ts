@@ -1,13 +1,16 @@
 import Component from "../Components";
 import Position from "../Components/Position.Component";
+import { v4 as uuidv4 } from 'uuid';
 
 export default class Entity {
     id: string;
+    tag: string;
     components: Object;
     isDisabled: boolean;
 
-    constructor({ id = "", x = 0, y = 0, components = {}, isDisabled = false }: IEntityProps) {
+    constructor({ id = uuidv4(), x = 0, y = 0, tag = "", components = {}, isDisabled = false }: IEntityProps) {
         this.id = id;
+        this.tag = tag;
         this.components = { ...components };
         this.isDisabled = isDisabled;
         /* Default components */
@@ -36,6 +39,7 @@ export default class Entity {
 
 interface IEntityProps {
     id?: string;
+    tag?: string;
     x?: number;
     y?: number;
     components?: Object;

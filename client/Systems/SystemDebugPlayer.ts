@@ -3,18 +3,16 @@ import System from "../@core/Systems";
 export default class SystemDebugPlayer extends System {
     update(time, entities) {
         entities
-            .filter(entity => entity.id === "player")
+            .filter(entity => entity.tag === "player")
             .forEach(({ components }) => {
-                if (components.health) {
-                    const meter = document.getElementById("player-health-meter");
-                    meter.textContent = `${JSON.stringify(components, null, 4)}`;
-                }
+                const debugText = document.getElementById("player-debugText");
+                debugText.textContent = `${JSON.stringify(components, null, 4)}`;
             });
     }
 
     start() {
-        const meter = document.createElement("pre");
-        meter.setAttribute("id", "player-health-meter");
-        document.getElementById("root").append(meter);
+        const debugText = document.createElement("pre");
+        debugText.setAttribute("id", "player-debugText");
+        document.getElementById("root").append(debugText);
     }
 }

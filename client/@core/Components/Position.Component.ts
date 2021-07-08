@@ -1,4 +1,5 @@
 import Component from ".";
+import { roundFloat } from "../Utils/rounding";
 
 export default class Position extends Component {
     x: number;
@@ -17,6 +18,6 @@ export default class Position extends Component {
     }
 
     transformation(x, y): void {
-        this.setPosition(this.x + x, this.y + y);
+        this.setPosition(roundFloat(this.x + x), roundFloat(this.y + y));
     }
 }

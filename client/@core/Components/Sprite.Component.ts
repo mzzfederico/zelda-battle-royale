@@ -6,7 +6,7 @@ export default class Sprite extends Component {
     height: number;
 
     constructor({ src, width = 1, height = 1 }) {
-        super({ name: "sprite" });
+        super();
 
         this.src = src;
         this.width = width;

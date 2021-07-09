@@ -6,7 +6,7 @@ export default class Position extends Component {
     y: number;
 
     constructor({ x, y }) {
-        super({ name: "position" });
+        super();
 
         this.x = x;
         this.y = y;

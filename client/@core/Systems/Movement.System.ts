@@ -1,20 +1,21 @@
 import System from ".";
 import Collider from "../Components/Collider.Component";
 import Movement from "../Components/Movement.Component";
+import Position from "../Components/Position.Component";
 import Entity from "../Entities";
 
 export default class MovementSystem extends System {
     update(timeframe: number, entities: Entity[]): void {
         entities
             .filter((entity: Entity): boolean => (
-                !!entity.getComponent("position")
-                && !!entity.getComponent("movement")
-                && !!entity.getComponent("collider")
+                !!entity.getComponent(Position)
+                && !!entity.getComponent(Movement)
+                && !!entity.getComponent(Collider)
             ))
             .forEach((entity: Entity): void => {
-                const position: Position = entity.getComponent("position");
-                const movement: Movement = entity.getComponent("movement");
-                const collider: Collider = entity.getComponent("collider");
+                const position = entity.getComponent(Position) as Position;
+                const movement = entity.getComponent(Movement) as Movement;
+                const collider = entity.getComponent(Collider) as Collider;
 
                 const { x, y } = movement;
 

@@ -1,20 +1,22 @@
 import System from ".";
+import Input from "../Components/Input.Component";
+import Entity from "../Entities";
 
 export default class InputManager extends System {
     inputs = {};
 
-    update(time, entities) {
+    update(time: number, entities: Entity[]): void {
         /* Gathers all keys to be watched */
         Object.entries(this.inputs).forEach(([key, { event, pressed }]) => {
             if (pressed) event(time);
         });
     }
 
-    deleteKey(key): void {
+    deleteKey(key: string): void {
         delete this.inputs[key];
     }
 
-    registerKey(key, event): void {
+    registerKey(key: string, event): void {
         this.inputs = { ...this.inputs, [key]: { pressed: false, event } };
     }
 
@@ -31,13 +33,13 @@ export default class InputManager extends System {
         document.removeEventListener('keyup', this.handleKeyEvent);
     }
 
-    start = (entities): void => {
+    start = (entities: Entity[]): void => {
 
         /* Gathers all keys to be watched */
         entities
-            .filter(({ components }) => components.input)
-            .forEach(({ components }) => {
-                Object.entries(components.input.config).forEach(
+            .filter((entity: Entity) => entity.getComponent(Input))
+            .forEach((entity: Entity) => {
+                Object.entries((entity.getComponent(Input) as Input).config).forEach(
                     ([key, event]) => this.registerKey(key, event)
                 )
             });

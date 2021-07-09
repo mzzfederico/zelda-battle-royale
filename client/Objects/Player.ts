@@ -60,8 +60,8 @@ export default class Player extends Entity {
     }
 
     handleInputMovement = (direction) => {
-        const animation: SpriteAnimation = this.getComponent("spriteAnimation");
-        const movement: Movement = this.getComponent("movement");
+        const animation = this.getComponent(SpriteAnimation) as SpriteAnimation;
+        const movement = this.getComponent(Movement) as Movement;
 
         animation.changeState(`walking_${direction}`);
 
@@ -72,18 +72,18 @@ export default class Player extends Entity {
     }
 
     handleStop = () => {
-        const animation: SpriteAnimation = this.getComponent("spriteAnimation");
+        const animation = this.getComponent(SpriteAnimation) as SpriteAnimation;
         animation.nextState();
     }
 
-    handleCollision(target) {
+    handleCollision(target: Entity) {
         if (target.tag === "coin") {
-            this.getComponent("coins").earnCoins(1);
+            (this.getComponent(Coins) as Coins).earnCoins(1);
             target.setDisabled(true);
         }
-        if (target.components.collider.isRigid) {
-            const position: Position = this.getComponent("position");
-            const collider: Collider = this.getComponent("collider");
+        if ((target.getComponent(Collider) as Collider).isRigid) {
+            const position = this.getComponent(Position) as Position;
+            const collider = this.getComponent(Collider) as Collider;
 
             /* Obtain safe position and restore it */
             const { x, y } = collider.getSafePosition();

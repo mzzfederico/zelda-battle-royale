@@ -8,7 +8,7 @@ export default class SpriteAnimation extends Component {
     animationStep: number;
 
     constructor(states: SpriteAnimationState[], defaultState: string = "") {
-        super({ name: "spriteAnimation" });
+        super();
 
         this.animationStep = 0;
         this.animationTime = 0;

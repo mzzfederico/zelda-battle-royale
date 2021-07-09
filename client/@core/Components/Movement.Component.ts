@@ -4,9 +4,11 @@ import { roundFloat } from "../Utils/rounding";
 export default class Movement extends Component {
     x: number;
     y: number;
+    onStart: Function;
+    onStop: Function;
 
     constructor({ x, y, onStart = () => { }, onStop = () => { } }) {
-        super({ name: "movement" });
+        super();
         this.x = x;
         this.y = y;
         this.onStart = onStart;

@@ -1,7 +1,7 @@
 import { ROOM_WIDTH, ROOM_HEIGHT, TILE_SIZE } from "../../constants";
 
 import Scene from "../../@core/Scene";
-import SystemSpriteRenderer from "../../@core/Systems/SpriteRender.System";
+import PNGSpriteRender from "../../@core/Systems/PNGSpriteRender.System";
 import Player from "../../Objects/Player";
 import Floor from "../../Objects/Floor";
 import SystemCanvas from "../../@core/Systems/Canvas.System";
@@ -44,7 +44,7 @@ export default class Gameplay extends Scene {
         //const doorwayW = new Doorway({ id: "doorway_w", x: 0, y: (ROOM_HEIGHT - 2) / 2 });
 
         const coinMeter = new SystemCoinMeter();
-        const spriteRendering = new SystemSpriteRenderer();
+        const spriteRendering = new PNGSpriteRender();
         const collisions = new SystemCollision();
         const input = new InputManager();
         const canvas = new SystemCanvas(ROOM_WIDTH * TILE_SIZE, ROOM_HEIGHT * TILE_SIZE);

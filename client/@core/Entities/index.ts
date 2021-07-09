@@ -17,12 +17,12 @@ export default class Entity {
         this.addComponent(new Position({ x, y }));
     }
 
-    getComponent(componentName: string): Component {
-        return this.components[componentName];
+    getComponent(componentClass): unknown {
+        return this.components[componentClass.name];
     }
 
     addComponent(component: Component): Entity {
-        this.components[component.name] = component;
+        this.components[component.constructor.name] = component;
         component.registerEntityId(this.id);
         return this;
     }

@@ -12,7 +12,7 @@ export default class Collider extends Component {
     parentEntity: Entity;
 
     constructor({ width, height, isStatic = false, isRigid = false, onCollision = (target) => { } }) {
-        super({ name: "collider" });
+        super();
 
         this.width = width;
         this.height = height;

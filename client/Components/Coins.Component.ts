@@ -4,7 +4,7 @@ export default class Coins extends Component {
     value: number = 0;
 
     constructor(initialCoins: number) {
-        super({ name: "coins" });
+        super();
         this.value = initialCoins;
     }
 

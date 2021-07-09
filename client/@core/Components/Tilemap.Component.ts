@@ -7,7 +7,7 @@ export default class Tilemap extends Component {
     map: Array[] = [[]];
 
     constructor(set, map) {
-        super({ name: 'tilemap' });
+        super();
         this.set = set;
         this.map = map;
     }

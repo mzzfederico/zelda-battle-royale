@@ -1,5 +1,7 @@
 import System from ".";
 import { ZOOM } from "../../constants";
+import Position from "../Components/Position.Component";
+import Tilemap from "../Components/Tilemap.Component";
 
 import { drawTileMap } from "../Utils/canvasRendering";
 
@@ -20,10 +22,11 @@ export default class CanvasRenderer extends System {
 
     drawTilemapsFromEntities(entities) {
         entities
-            .filter(entity => entity.components.tilemap && entity.components.position)
+            .filter(entity => !!entity.getComponent(Tilemap) && !!entity.getComponent(Position))
             .forEach(
-                ({ id, components }) => {
-                    const { tilemap, position } = components;
+                (entity) => {
+                    const tilemap = entity.getComponent(Tilemap) as Tilemap;
+                    const position = entity.getComponent(Position) as Position;
                     drawTileMap(this.ctx, tilemap.map, tilemap.set, position);
                 }
             );

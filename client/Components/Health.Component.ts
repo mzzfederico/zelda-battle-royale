@@ -4,7 +4,7 @@ export default class Health extends Component {
     value: number = 3;
 
     constructor(initialHealth: number = 3) {
-        super({ name: "health" });
+        super();
         this.value = initialHealth;
     }
 

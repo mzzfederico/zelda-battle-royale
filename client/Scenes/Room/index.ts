@@ -12,7 +12,7 @@ import SystemCollision from "../../@core/Systems/Collision.System";
 import InputManager from "../../@core/Systems/Input.System";
 import MovementSystem from "../../@core/Systems/Movement.System";
 import Coin from "../../Objects/Coin";
-import Doorway from "../../Objects/Doorway";
+import Doorway, { DoorwayDirection } from "../../Objects/Doorway";
 import AnimationSystem from "../../@core/Systems/Animation.System";
 import rollDice from "../../@core/Utils/dice";
 
@@ -56,10 +56,6 @@ export default class Gameplay extends Scene {
 
         [player, floor, ...coins, ...walls].forEach(this.addEntity);
         [canvas, spriteRendering, coinMeter, movement, collisions, input, animation, debug].forEach(this.addSystem);
-
-        this.start();
-
-        console.log(this);
     }
 
     generateWall(direction = "n", doorway = 'closed') {
@@ -71,27 +67,31 @@ export default class Gameplay extends Scene {
         if (direction === 'n') {
             wallEntities.push(
                 new Wall({ side: "n", id: "wallN1", x: 1, y: 0, length: horLength }),
-                new Wall({ side: "n", id: "wallN2", x: ROOM_WIDTH - 9, y: 0, length: horLength })
+                new Wall({ side: "n", id: "wallN2", x: ROOM_WIDTH - 9, y: 0, length: horLength }),
+                new Doorway({ x: ROOM_WIDTH - 9 - 2, y: 0, direction: DoorwayDirection.Horizontal })
             )
         }
         if (direction === 'w') {
             wallEntities.push(
                 new Wall({ side: "w", id: "wallW1", x: 0, y: 1, length: verLength }),
-                new Wall({ side: "w", id: "wallW2", x: 0, y: ROOM_HEIGHT - 5, length: verLength })
+                new Wall({ side: "w", id: "wallW2", x: 0, y: ROOM_HEIGHT - 5, length: verLength }),
+                new Doorway({ x: 0, y: ROOM_HEIGHT - 5 - 2, direction: DoorwayDirection.Vertical })
             )
         }
         if (direction === 's') {
             const yOffset = ROOM_HEIGHT - 1;
             wallEntities.push(
                 new Wall({ side: "s", id: "wallS1", x: 1, y: yOffset, length: horLength }),
-                new Wall({ side: "s", id: "wallS2", x: ROOM_WIDTH - 9, y: yOffset, length: horLength })
+                new Wall({ side: "s", id: "wallS2", x: ROOM_WIDTH - 9, y: yOffset, length: horLength }),
+                new Doorway({ x: ROOM_WIDTH - 9 - 2, y: yOffset + 1, direction: DoorwayDirection.Horizontal })
             )
         }
         if (direction === 'e') {
             const xOffset = ROOM_WIDTH - 1;
             wallEntities.push(
                 new Wall({ side: "e", id: "wallE1", x: xOffset, y: 1, length: verLength }),
-                new Wall({ side: "e", id: "wallE2", x: xOffset, y: ROOM_HEIGHT - 5, length: verLength })
+                new Wall({ side: "e", id: "wallE2", x: xOffset, y: ROOM_HEIGHT - 5, length: verLength }),
+                new Doorway({ x: xOffset + 1, y: ROOM_HEIGHT - 5 - 2, direction: DoorwayDirection.Vertical })
             )
         }
 

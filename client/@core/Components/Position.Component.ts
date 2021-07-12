@@ -18,6 +18,7 @@ export default class Position extends Component {
     }
 
     transformation(x, y): void {
+        if (x === 0 && y === 0) return;
         this.setPosition(roundFloat(this.x + x), roundFloat(this.y + y));
     }
 }

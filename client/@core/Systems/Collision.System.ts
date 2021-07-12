@@ -23,7 +23,7 @@ export default class Collision extends System {
                     );
 
                     if (collisionOccurred) {
-                        (source.getComponent(Collider) as Collider).onCollision(target);
+                        (source.getComponent(Collider) as Collider).onCollision(target, this.$scene);
                     }
                 })
         )

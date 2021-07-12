@@ -28,7 +28,7 @@ export default class InputManager extends System {
         }
     }
 
-    destroy(): void {
+    end(): void {
         document.removeEventListener('keydown', this.handleKeyEvent);
         document.removeEventListener('keyup', this.handleKeyEvent);
     }

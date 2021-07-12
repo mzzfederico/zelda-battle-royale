@@ -12,6 +12,7 @@ export default class SpriteRenderer extends System {
             .forEach((entity: Entity) => {
                 const { isDisabled } = entity;
                 const sprite = document.getElementById(entity.id) as HTMLImageElement;
+                if (!sprite) return;
                 if (!isDisabled) this.updateSprite(sprite, entity);
                 if (isDisabled) this.hideSprite(sprite);
             });
@@ -50,5 +51,15 @@ export default class SpriteRenderer extends System {
 
     hideSprite(sprite: HTMLImageElement): void {
         sprite.style.display = "none";
+    }
+
+    cleanup(entity: Entity) {
+        if (!!entity.getComponent(Sprite)) {
+            document.getElementById(entity.id).remove();
+        }
+    }
+
+    end(entities: Entity[]) {
+        entities.forEach(this.cleanup);
     }
 }

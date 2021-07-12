@@ -18,6 +18,7 @@ import Collider from "../@core/Components/Collider.Component";
 import Input from "../@core/Components/Input.Component";
 import Movement from "../@core/Components/Movement.Component";
 import SpriteAnimation from "../@core/Components/SpriteAnimation.Component";
+import Scene from "../@core/Scene";
 
 export default class Player extends Entity {
     playerSpeed = 0.0035;
@@ -76,10 +77,13 @@ export default class Player extends Entity {
         animation.nextState();
     }
 
-    handleCollision(target: Entity) {
+    handleCollision(target: Entity, scene: Scene) {
+        if (target.tag === "doorway") {
+            /* scene.end(); */
+        }
         if (target.tag === "coin") {
             (this.getComponent(Coins) as Coins).earnCoins(1);
-            target.setDisabled(true);
+            scene.removeEntity(target.id);
         }
         if ((target.getComponent(Collider) as Collider).isRigid) {
             const position = this.getComponent(Position) as Position;

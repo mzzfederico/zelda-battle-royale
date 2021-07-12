@@ -15,4 +15,9 @@ export default class SystemDebugPlayer extends System {
         debugText.setAttribute("id", "player-debugText");
         document.getElementById("root").append(debugText);
     }
+
+    end() {
+        const meter = document.getElementById("player-debugText");
+        meter.remove();
+    }
 }

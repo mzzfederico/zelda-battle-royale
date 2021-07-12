@@ -5,7 +5,7 @@ import Position from "../Components/Position.Component";
 import Entity from "../Entities";
 
 export default class MovementSystem extends System {
-    update(timeframe: number, entities: Entity[]): void {
+    update(timeframe: number = 0, entities: Entity[]): void {
         entities
             .filter((entity: Entity): boolean => (
                 !!entity.getComponent(Position)

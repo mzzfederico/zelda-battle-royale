@@ -16,10 +16,6 @@ export default class CanvasRenderer extends System {
         this.width = width;
     }
 
-
-    /* update(time, entities): void {
-    } */
-
     drawTilemapsFromEntities(entities) {
         entities
             .filter(entity => !!entity.getComponent(Tilemap) && !!entity.getComponent(Position))
@@ -34,6 +30,7 @@ export default class CanvasRenderer extends System {
 
     start(entities): void {
         const canvas = document.createElement("canvas");
+        canvas.setAttribute("id", "CanvasRenderer");
         this.ctx = canvas.getContext("2d");
 
         canvas.setAttribute('width', `${this.width * ZOOM}`);
@@ -42,5 +39,9 @@ export default class CanvasRenderer extends System {
         this.drawTilemapsFromEntities(entities);
 
         document.getElementById("root").append(canvas);
+    }
+
+    end() {
+        document.getElementById("CanvasRenderer").remove();
     }
 }

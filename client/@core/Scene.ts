@@ -19,47 +19,17 @@ export default class Scene {
     }
 
     removeEntity = (EntityId: string): void => {
-        this.entities.filter(entity => entity.id !== EntityId);
-    }
+        const assertEntity = entity => entity.id === EntityId;
 
+        this.systems.forEach((system: System) => {
+            system.cleanup(this.entities.find(assertEntity));
+        });
+
+        this.entities = this.entities.filter((e) => !assertEntity(e));
+    }
 
     addSystem = (newSystem: System): void => {
+        newSystem.registerScene(this);
         this.systems.push(newSystem);
-    }
-
-    removeSystem = (SystemId: string): void => {
-        this.systems.filter(system => system.id !== SystemId);
-    }
-
-    update = (progress: number): void => {
-        // Update the state of the world for the elapsed time since last render
-        //console.log("update");
-
-        this.systems.forEach((system: System) => {
-            system.update(progress, this.entities);
-        });
-    }
-
-    /* draw = (): void => {
-        // Draw the state of the world
-        //console.log("draw");
-    } */
-
-    loop = (timestamp: number): void => {
-        const progress: number = timestamp - this.lastRender;
-
-        this.update(progress);
-        //this.draw();
-
-        this.lastRender = timestamp;
-        window.requestAnimationFrame(this.loop);
-    }
-
-    start = (): void => {
-        this.systems.forEach((system: System) => {
-            system.start(this.entities);
-        });
-
-        window.requestAnimationFrame(this.loop);
     }
 }

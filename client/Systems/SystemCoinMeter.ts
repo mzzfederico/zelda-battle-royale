@@ -1,4 +1,4 @@
-import System from "../@core/Systems";
+import System from "../Core/Systems";
 import Coins from "../Components/Coins.Component";
 
 import coinSrc from "../Sprites/coin/coin.png";

@@ -1,20 +1,20 @@
 import { ROOM_WIDTH, ROOM_HEIGHT, TILE_SIZE } from "../../constants";
 
-import Scene from "../../@core/Scene";
-import PNGSpriteRender from "../../@core/Systems/PNGSpriteRender.System";
+import Scene from "../../Core/Scene";
+import PNGSpriteRender from "../../Core/Systems/PNGSpriteRender.System";
 import Player from "../../Objects/Player";
 import Floor from "../../Objects/Floor";
-import SystemCanvas from "../../@core/Systems/Canvas.System";
+import SystemCanvas from "../../Core/Systems/Canvas.System";
 import Wall from "../../Objects/Wall";
 import SystemDebugPlayer from "../../Systems/SystemDebugPlayer";
 import SystemCoinMeter from "../../Systems/SystemCoinMeter";
-import SystemCollision from "../../@core/Systems/Collision.System";
-import InputManager from "../../@core/Systems/Input.System";
-import MovementSystem from "../../@core/Systems/Movement.System";
+import SystemCollision from "../../Core/Systems/Collision.System";
+import InputManager from "../../Core/Systems/Input.System";
+import MovementSystem from "../../Core/Systems/Movement.System";
 import Coin from "../../Objects/Coin";
 import Doorway, { DoorwayDirection } from "../../Objects/Doorway";
-import AnimationSystem from "../../@core/Systems/Animation.System";
-import rollDice from "../../@core/Utils/dice";
+import AnimationSystem from "../../Core/Systems/Animation.System";
+import rollDice from "../../Core/Utils/dice";
 
 export default class Gameplay extends Scene {
     constructor() {

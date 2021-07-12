@@ -1,4 +1,4 @@
-import System from "../@core/Systems";
+import System from "../Core/Systems";
 
 export default class SystemDebugPlayer extends System {
     update(time, entities) {

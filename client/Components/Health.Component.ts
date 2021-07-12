@@ -1,4 +1,4 @@
-import Component from "../@core/Components";
+import Component from "../Core/Components";
 
 export default class Health extends Component {
     value: number = 3;

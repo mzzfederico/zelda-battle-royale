@@ -1,6 +1,6 @@
-import Collider from "../@core/Components/Collider.Component";
-import Tilemap from "../@core/Components/Tilemap.Component";
-import Entity from "../@core/Entities";
+import Collider from "../Core/Components/Collider.Component";
+import Tilemap from "../Core/Components/Tilemap.Component";
+import Entity from "../Core/Entities";
 import BricksTileset from "../Tilesets/bricks";
 
 const tilesPerDirection = {

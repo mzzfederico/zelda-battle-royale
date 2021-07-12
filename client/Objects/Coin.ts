@@ -1,8 +1,8 @@
 import { v4 as uuidv4 } from 'uuid';
 
-import Collider from "../@core/Components/Collider.Component";
-import Sprite from "../@core/Components/Sprite.Component";
-import Entity from "../@core/Entities";
+import Collider from "../Core/Components/Collider.Component";
+import Sprite from "../Core/Components/Sprite.Component";
+import Entity from "../Core/Entities";
 
 import coin from "../Sprites/coin/coin.png";
 

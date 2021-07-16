@@ -1,5 +1,5 @@
-import Collider from "../Core/Components/Collider.Component";
-import Entity from "../Core/Entities";
+import Collider from "__Components/Collider.Component";
+import Entity from "__Core/Entity";
 
 export enum DoorwayDirection {
     Vertical,

@@ -1,6 +1,6 @@
-import System from "../Core/Systems";
-import Coins from "../Components/Coins.Component";
+import System from "__Core/System";
 
+import Coins from "../Components/Coins.Component";
 import coinSrc from "../Sprites/coin/coin.png";
 
 export default class SystemCoinMeter extends System {

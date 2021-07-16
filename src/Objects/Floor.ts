@@ -1,5 +1,5 @@
-import Tilemap from "../Core/Components/Tilemap.Component";
-import Entity from "../Core/Entities";
+import Tilemap from "__Components/Tilemap.Component";
+import Entity from "__Core/Entity";
 import { ROOM_HEIGHT, ROOM_WIDTH } from "../constants";
 import BricksTileset from "../Tilesets/bricks";
 

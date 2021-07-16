@@ -1,20 +1,17 @@
 import { ROOM_WIDTH, ROOM_HEIGHT, TILE_SIZE } from "../../constants";
 
-import Scene from "../../Core/Scene";
-import PNGSpriteRender from "../../Core/Systems/PNGSpriteRender.System";
-import Player from "../../Objects/Player";
-import Floor from "../../Objects/Floor";
-import SystemCanvas from "../../Core/Systems/Canvas.System";
-import Wall from "../../Objects/Wall";
-import SystemDebugPlayer from "../../Systems/SystemDebugPlayer";
-import SystemCoinMeter from "../../Systems/SystemCoinMeter";
-import SystemCollision from "../../Core/Systems/Collision.System";
-import InputManager from "../../Core/Systems/Input.System";
-import MovementSystem from "../../Core/Systems/Movement.System";
+import PNGSpriteRender from "__Systems/PNGSpriteRender.System";
+import rollDice from "__Utils/dice";
+import Scene from "__Core/Scene";
+import SystemCollision from "__Systems/Collision.System";
+
 import Coin from "../../Objects/Coin";
+import SystemCoinMeter from "../../Systems/SystemCoinMeter";
 import Doorway, { DoorwayDirection } from "../../Objects/Doorway";
-import AnimationSystem from "../../Core/Systems/Animation.System";
-import rollDice from "../../Core/Utils/dice";
+import Floor from "../../Objects/Floor";
+import Player from "../../Objects/Player";
+import SystemDebugPlayer from "../../Systems/SystemDebugPlayer";
+import Wall from "../../Objects/Wall";
 
 export default class Gameplay extends Scene {
     constructor() {
@@ -46,16 +43,12 @@ export default class Gameplay extends Scene {
         const coinMeter = new SystemCoinMeter();
         const spriteRendering = new PNGSpriteRender();
         const collisions = new SystemCollision();
-        const input = new InputManager();
-        const canvas = new SystemCanvas(ROOM_WIDTH * TILE_SIZE, ROOM_HEIGHT * TILE_SIZE);
-        const movement = new MovementSystem();
-        const animation = new AnimationSystem();
 
         /* To be disabled... */
         const debug = new SystemDebugPlayer();
 
         [player, floor, ...coins, ...walls].forEach(this.addEntity);
-        [canvas, spriteRendering, coinMeter, movement, collisions, input, animation, debug].forEach(this.addSystem);
+        [spriteRendering, coinMeter, collisions, debug].forEach(this.addSystem);
     }
 
     generateWall(direction = "n", doorway = 'closed') {

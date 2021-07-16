@@ -1,4 +1,4 @@
-import Component from "../Core/Components";
+import Component from "__Core/Component";
 
 export default class Coins extends Component {
     value: number = 0;

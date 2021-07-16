@@ -1,6 +1,0 @@
-[submodule "client/core"]
-	path = client/core
-	url = git@github.com:mzzfederico/type-x.git
-[submodule "client/Core"]
-	path = client/Core
-	url = git@github.com:mzzfederico/type-x.git

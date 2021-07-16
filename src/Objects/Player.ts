@@ -1,5 +1,5 @@
 
-import Entity from "../Core/Entities";
+import Entity from "__Core/Entity";
 
 import Link_1 from "../Sprites/Link/1.png";
 import Link_2 from "../Sprites/Link/2.png";
@@ -10,15 +10,15 @@ import Link_6 from "../Sprites/Link/6.png";
 import Link_7 from "../Sprites/Link/7.png";
 import Link_8 from "../Sprites/Link/8.png";
 
-import Position from "../Core/Components/Position.Component";
-import Sprite from "../Core/Components/Sprite.Component";
+import Position from "__Components/Position.Component";
+import Sprite from "__Components/Sprite.Component";
 import Health from "../Components/Health.Component";
 import Coins from "../Components/Coins.Component";
-import Collider from "../Core/Components/Collider.Component";
-import Input from "../Core/Components/Input.Component";
-import Movement from "../Core/Components/Movement.Component";
-import SpriteAnimation from "../Core/Components/SpriteAnimation.Component";
-import Scene from "../Core/Scene";
+import Collider from "__Components/Collider.Component";
+import Input from "__Components/Input.Component";
+import Movement from "__Components/Movement.Component";
+import SpriteAnimation from "__Components/SpriteAnimation.Component";
+import Scene from "__Core/Scene";
 
 export default class Player extends Entity {
     playerSpeed = 0.0035;

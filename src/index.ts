@@ -1,4 +1,4 @@
-import GameLoop from "./Core/GameLoop";
+import GameLoop from "__Core/GameLoop";
 import Room from "./Scenes/Room";
 
 document.addEventListener('readystatechange', event => {

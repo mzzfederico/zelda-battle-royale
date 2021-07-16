@@ -1,9 +1,8 @@
 import { v4 as uuidv4 } from 'uuid';
 
-import Collider from "../Core/Components/Collider.Component";
-import Sprite from "../Core/Components/Sprite.Component";
-import Entity from "../Core/Entities";
-
+import Collider from "__Components/Collider.Component";
+import Sprite from "__Components/Sprite.Component";
+import Entity from "__Core/Entity";
 import coin from "../Sprites/coin/coin.png";
 
 export default class Coin extends Entity {

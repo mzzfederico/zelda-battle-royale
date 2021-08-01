@@ -29,17 +29,17 @@ export default class Player extends Entity {
         const sprite = new Sprite({ src: Link_1, width: 1, height: 1 });
         const health = new Health(3);
         const coins = new Coins(0);
-        const collider = new Collider({ width: 1, height: 1, isStatic: false, onCollision: this.handleCollision.bind(this) });
+        const collider = new Collider({ width: 1, height: 1, isStatic: false, onCollision: this.handleCollision.bind(this), hasWeight: true });
         const movement = new Movement({ x: 0, y: 0, onStop: this.handleStop });
         const animation = new SpriteAnimation([
-            { name: 'standing_n', frames: [Link_3], interval: 300 },
-            { name: 'standing_s', frames: [Link_1], interval: 300 },
-            { name: 'standing_e', frames: [Link_4], interval: 300 },
-            { name: 'standing_w', frames: [Link_2], interval: 300 },
-            { name: 'walking_n', frames: [Link_3, Link_7], interval: 300, nextState: 'standing_n' },
-            { name: 'walking_s', frames: [Link_1, Link_5], interval: 300, nextState: 'standing_s' },
-            { name: 'walking_e', frames: [Link_4, Link_8], interval: 300, nextState: 'standing_e' },
-            { name: 'walking_w', frames: [Link_2, Link_6], interval: 300, nextState: 'standing_w' },
+            { name: 'standing_n', frames: [Link_3], interval: -1 },
+            { name: 'standing_s', frames: [Link_1], interval: -1 },
+            { name: 'standing_e', frames: [Link_4], interval: -1 },
+            { name: 'standing_w', frames: [Link_2], interval: -1 },
+            { name: 'walking_n', frames: [Link_3, Link_7], interval: 166, nextState: 'standing_n' },
+            { name: 'walking_s', frames: [Link_1, Link_5], interval: 166, nextState: 'standing_s' },
+            { name: 'walking_e', frames: [Link_4, Link_8], interval: 166, nextState: 'standing_e' },
+            { name: 'walking_w', frames: [Link_2, Link_6], interval: 166, nextState: 'standing_w' },
         ], "standing_s");
         this.addComponent(sprite);
         this.addComponent(health);
@@ -83,6 +83,7 @@ export default class Player extends Entity {
         }
         if (target.tag === "coin") {
             (this.getComponent(Coins) as Coins).earnCoins(1);
+            target.setDisabled(true);
             scene.removeEntity(target.id);
         }
         if ((target.getComponent(Collider) as Collider).isRigid) {

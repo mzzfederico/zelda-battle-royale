@@ -23,6 +23,7 @@ export default class SystemCoinMeter extends System {
     }
 
     start() {
+        if (document.getElementById("player-coins-meter")) return;
         const meter = document.createElement("div");
         meter.setAttribute("id", "player-coins-meter");
         document.getElementById("root").append(meter);

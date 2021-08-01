@@ -1,17 +1,44 @@
 import GameLoop from "__Core/GameLoop";
-import Room from "./Scenes/Room";
+import Scene from "__Core/Scene";
+import { ROOM_HEIGHT, ROOM_WIDTH } from "./constants";
+import Dungeon from "./Dungeon";
+import Doorway, { DoorwayDirection } from "./Entities/Doorway";
+import Player from "./Entities/Player";
+import Room from "./Sets/Room.set";
+import SystemCoinMeter from "./Systems/SystemCoinMeter";
+import SystemDebugPlayer from "./Systems/SystemDebugPlayer";
 
 document.addEventListener('readystatechange', event => {
-    // When HTML/DOM elements are ready:
-    if (event.target.readyState === "interactive") {   //does same as:  ..addEventListener("DOMContentLoaded"..
-        //alert("hi 1");
-    }
-
-    // When window loaded ( external resources are loaded too- `css`,`src`, etc...)
     if (event.target.readyState === "complete") {
-        const dungeonRoom = new Room();
-        const game = new GameLoop([dungeonRoom]);
-
-        game.start();
+        Main();
     }
 });
+
+function Main() {
+    const player = new Player({ spawn: { x: 9.5, y: 5.5 } });
+
+
+    const coinMeter = new SystemCoinMeter();
+    /* To be disabled... */
+    const debug = new SystemDebugPlayer();
+
+    const gameplayScene = new Scene("gameplay", [], [coinMeter, debug]);
+    const game = new GameLoop(gameplayScene);
+    const dungeon = new Dungeon(game);
+
+    /* Doorways */
+    const xOffset = ROOM_WIDTH - 1;
+    const yOffset = ROOM_HEIGHT - 1;
+
+    const handleEntry = (direction) => dungeon.changeRoom(direction);
+
+    const doorways = [
+        new Doorway({ x: ROOM_WIDTH - 9 - 2, y: -1, direction: DoorwayDirection.Top, handleEntry }),
+        new Doorway({ x: xOffset + 2, y: ROOM_HEIGHT - 5 - 2, direction: DoorwayDirection.Right, handleEntry }),
+        new Doorway({ x: ROOM_WIDTH - 9 - 2, y: yOffset + 2, direction: DoorwayDirection.Bottom, handleEntry }),
+        new Doorway({ x: -1, y: ROOM_HEIGHT - 5 - 2, direction: DoorwayDirection.Left, handleEntry })
+    ].forEach(entity => game.currentScene.addEntity(entity));
+
+    /* Spawn player */
+    game.currentScene.addEntity(player);
+}

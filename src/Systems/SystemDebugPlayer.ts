@@ -11,6 +11,7 @@ export default class SystemDebugPlayer extends System {
     }
 
     start() {
+        if (document.getElementById("player-debugText")) return;
         const debugText = document.createElement("pre");
         debugText.setAttribute("id", "player-debugText");
         document.getElementById("root").append(debugText);

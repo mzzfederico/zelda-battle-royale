@@ -4,9 +4,9 @@ export default class SystemDebugPlayer extends System {
     update(time, entities) {
         entities
             .filter(entity => entity.tag === "player")
-            .forEach(({ components }) => {
+            .forEach(({ room, components }) => {
                 const debugText = document.getElementById("player-debugText");
-                debugText.textContent = `${JSON.stringify(components, null, 4)}`;
+                debugText.textContent = `${JSON.stringify({ room, components }, null, 4)}`;
             });
     }
 

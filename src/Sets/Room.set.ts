@@ -9,15 +9,23 @@ import Coin from "../Entities/Coin";
 
 export default class RoomSet {
     constructor(
-        content: Entity[] = []
+        content: Entity[] = [],
+        wallStates: WallStateEnum[] = [
+            WallStateEnum.Open,
+            WallStateEnum.Open,
+            WallStateEnum.Open,
+            WallStateEnum.Open
+        ]
     ) {
         const floor = new Floor();
         const walls = [
-            ...this.generateWall(DoorwayDirection.Top),
-            ...this.generateWall(DoorwayDirection.Left),
-            ...this.generateWall(DoorwayDirection.Bottom),
-            ...this.generateWall(DoorwayDirection.Right)
-        ];
+            DoorwayDirection.Top,
+            DoorwayDirection.Right,
+            DoorwayDirection.Bottom,
+            DoorwayDirection.Left
+        ].map(
+            direction => this.generateWall(direction, wallStates[direction])
+        ).flat();
 
 
         const coins = [];
@@ -38,40 +46,48 @@ export default class RoomSet {
     contents: Entity[];
 
     generateWall(
-        direction: DoorwayDirection = DoorwayDirection.Top
+        direction: DoorwayDirection = DoorwayDirection.Top, state: WallStateEnum = WallStateEnum.Open
     ): Entity[] {
-        const wallEntities = [];
+        let length = 1;
 
-        const horLength = 8;
-        const verLength = 4;
+        const xOffset = ROOM_WIDTH - 1;
+        const yOffset = ROOM_HEIGHT - 1;
 
-        if (direction === DoorwayDirection.Top) {
-            wallEntities.push(
-                new Wall({ side: "n", id: "wallN1", x: 1, y: 0, length: horLength }),
-                new Wall({ side: "n", id: "wallN2", x: ROOM_WIDTH - 9, y: 0, length: horLength }),
-            )
-        }
-        if (direction === DoorwayDirection.Right) {
-            const xOffset = ROOM_WIDTH - 1;
-            wallEntities.push(
-                new Wall({ side: "e", id: "wallE1", x: xOffset, y: 1, length: verLength }),
-                new Wall({ side: "e", id: "wallE2", x: xOffset, y: ROOM_HEIGHT - 5, length: verLength })
-            )
-        }
-        if (direction === DoorwayDirection.Bottom) {
-            const yOffset = ROOM_HEIGHT - 1;
-            wallEntities.push(
-                new Wall({ side: "s", id: "wallS1", x: 1, y: yOffset, length: horLength }),
-                new Wall({ side: "s", id: "wallS2", x: ROOM_WIDTH - 9, y: yOffset, length: horLength })
-            )
-        }
-        if (direction === DoorwayDirection.Left) {
-            wallEntities.push(
-                new Wall({ side: "w", id: "wallW1", x: 0, y: 1, length: verLength }),
-                new Wall({ side: "w", id: "wallW2", x: 0, y: ROOM_HEIGHT - 5, length: verLength })
-            )
+        let coordinatesByDirection = [];
+
+        if (state === WallStateEnum.Open) {
+            if (direction === DoorwayDirection.Top || direction === DoorwayDirection.Bottom) length = 8;
+            if (direction === DoorwayDirection.Left || direction === DoorwayDirection.Right) length = 4;
+
+            coordinatesByDirection = [
+                [{ x: 1, y: 0 }, { x: ROOM_WIDTH - 9, y: 0 }],
+                [{ x: xOffset, y: 1 }, { x: xOffset, y: ROOM_HEIGHT - 5 }],
+                [{ x: 1, y: yOffset }, { x: ROOM_WIDTH - 9, y: yOffset }],
+                [{ x: 0, y: 1 }, { x: 0, y: ROOM_HEIGHT - 5 }],
+            ];
         }
 
-        return [...wallEntities];
+        if (state === WallStateEnum.Closed) {
+            if (direction === DoorwayDirection.Top || direction === DoorwayDirection.Bottom) length = ROOM_WIDTH - 2;
+            if (direction === DoorwayDirection.Left || direction === DoorwayDirection.Right) length = ROOM_HEIGHT - 2;
+
+            coordinatesByDirection = [
+                [{ x: 1, y: 0 }],
+                [{ x: xOffset, y: 1 }],
+                [{ x: 1, y: yOffset }],
+                [{ x: 0, y: 1 }],
+            ];
+        }
+
+        return coordinatesByDirection[direction].map(
+            ((pos, index) => new Wall({ id: `wall${direction}${index}`, side: direction, length, ...pos }))
+        );
     }
+}
+
+export enum WallStateEnum {
+    Open,
+    Closed,
+    Breakable,
+    Broken
 }

@@ -18,8 +18,14 @@ export default class Doorway extends Entity {
         if (direction === DoorwayDirection.Top || direction === DoorwayDirection.Bottom) width = 2, height = 0.1;
         if (direction === DoorwayDirection.Left || direction === DoorwayDirection.Right) width = 0.1, height = 2;
 
+        const onCollision = (target) => {
+            if (target.tag === "player") {
+                handleEntry(direction);
+            }
+        }
+
         this.addComponent(new Collider({
-            width, height, isRigid: true, onCollision: (target) => (target.tag === "player") ? handleEntry(direction) : null
+            width, height, isRigid: false, onCollision
         }));
 
         this.addComponent(new Sprite({

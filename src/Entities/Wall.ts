@@ -2,12 +2,13 @@ import Collider from "__Components/Collider.Component";
 import Tilemap from "__Components/Tilemap.Component";
 import Entity from "__Core/Entity";
 import BricksTileset from "../Tilesets/bricks";
+import { DoorwayDirection } from "./Doorway";
 
 const tilesPerDirection = {
-    n: 1,
-    w: 11,
-    e: 13,
-    s: 23
+    [DoorwayDirection.Top]: 1,
+    [DoorwayDirection.Right]: 13,
+    [DoorwayDirection.Bottom]: 23,
+    [DoorwayDirection.Left]: 11
 }
 
 const cornerTiles = {
@@ -16,17 +17,17 @@ const cornerTiles = {
 }
 
 export default class Wall extends Entity {
-    side: string = "n";
+    side: DoorwayDirection = DoorwayDirection.Top;
 
-    constructor({ id = "wall", side, x = 0, y = 0, length = 1 }: IWallProps) {
+    constructor({ id = "wall", side = DoorwayDirection.Top, x = 0, y = 0, length = 1 }: IWallProps) {
         super({ id, x, y });
 
         this.side = side;
 
         let width = 1;
         let height = 1;
-        if (side === "n" || side === "s") width = length;
-        if (side === "w" || side === "e") height = length;
+        if (side === DoorwayDirection.Top || side === DoorwayDirection.Bottom) width = length;
+        if (side === DoorwayDirection.Left || side === DoorwayDirection.Right) height = length;
 
         const wallTileMap = (new Array(height))
             .fill(
@@ -40,7 +41,7 @@ export default class Wall extends Entity {
 
 interface IWallProps {
     id: string;
-    side: string;
+    side: DoorwayDirection;
     x?: number;
     y?: number;
     length?: number;

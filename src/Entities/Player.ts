@@ -19,9 +19,11 @@ import Input from "__Components/Input.Component";
 import Movement from "__Components/Movement.Component";
 import SpriteAnimation from "__Components/SpriteAnimation.Component";
 import Scene from "__Core/Scene";
+import handleRigidCollision from "../../../engine/Utils/handleRigidCollision";
 
 export default class Player extends Entity {
-    playerSpeed = 0.0035;
+    playerSpeed: number = 0.0035;
+    room: number[] = [0, 0];
 
     constructor({ spawn = { x: 0, y: 0 } }: IPlayerProps) {
         super({ tag: "player", x: spawn.x, y: spawn.y });
@@ -29,8 +31,16 @@ export default class Player extends Entity {
         const sprite = new Sprite({ src: Link_1, width: 1, height: 1 });
         const health = new Health(3);
         const coins = new Coins(0);
-        const collider = new Collider({ width: 1, height: 1, isStatic: false, onCollision: this.handleCollision.bind(this), hasWeight: true });
-        const movement = new Movement({ x: 0, y: 0, onStop: this.handleStop });
+        const collider = new Collider({
+            width: 1, height: 1,
+            isRigid: true,
+            initialPosition: spawn,
+            onCollision: this.handleCollision.bind(this)
+        });
+        const movement = new Movement({
+            x: 0, y: 0,
+            onStop: this.handleStop
+        });
         const animation = new SpriteAnimation([
             { name: 'standing_n', frames: [Link_3], interval: -1 },
             { name: 'standing_s', frames: [Link_1], interval: -1 },
@@ -78,23 +88,16 @@ export default class Player extends Entity {
     }
 
     handleCollision(target: Entity, scene: Scene) {
-        if (target.tag === "doorway") {
-            /* scene.end(); */
-        }
         if (target.tag === "coin") {
             (this.getComponent(Coins) as Coins).earnCoins(1);
             target.setDisabled(true);
             scene.removeEntity(target.id);
         }
-        if ((target.getComponent(Collider) as Collider).isRigid) {
-            const position = this.getComponent(Position) as Position;
-            const collider = this.getComponent(Collider) as Collider;
 
-            /* Obtain safe position and restore it */
-            const { x, y } = collider.getSafePosition();
-            position.setPosition(x, y);
-            collider.saveSafePosition(x, y);
-        }
+        const isTargetRigid = (target.getComponent(Collider) as Collider).isRigid;
+        const isTargetEnemy = target.tag === "enemy";
+
+        if (isTargetRigid && !isTargetEnemy) handleRigidCollision(this, target);
     }
 }
 

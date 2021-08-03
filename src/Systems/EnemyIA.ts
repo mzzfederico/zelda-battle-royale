@@ -14,7 +14,7 @@ export default class EnemyAI extends System {
 
         /* Handle time without damage */
         const playerHealth = player.getComponent(Health) as Health;
-        playerHealth.invincibleTime = playerHealth.invincibleTime > 0 ? playerHealth.invincibleTime - time : 0;
+        playerHealth.invincibleTime = playerHealth.invincibleTime > 0 ? Math.floor(playerHealth.invincibleTime - time) : 0;
 
         (entities.filter(assertEmemy) as Enemy[]).forEach(
             (enemy: Enemy) => {

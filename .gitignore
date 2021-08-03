@@ -118,6 +118,8 @@ dist
 .pnp.*
 
 # type-x
+client
+client/
 client/**/*
 ./client/**/*
 

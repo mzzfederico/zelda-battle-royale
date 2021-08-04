@@ -8,9 +8,9 @@ export default class SystemDebugPlayer extends System {
 
     update(time, entities) {
         entities
-            .filter(entity => entity)
+            .filter(entity => !!entity.getComponent(EnemyBehaviour))
             .forEach((entity) => {
-                this.debugText.textContent = `${JSON.stringify({ b: entity.getComponent(ColliderGroup) }, null, 4)}`;
+                this.debugText.textContent = `${JSON.stringify({ b: entity.getComponent(EnemyBehaviour) }, null, 4)}`;
             });
     }
 

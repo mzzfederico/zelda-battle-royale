@@ -11,6 +11,7 @@ import Link_7 from "../Sprites/Link/7.png";
 import Link_8 from "../Sprites/Link/8.png";
 
 import Sprite from "__Components/Sprite.Component";
+import Relationship, { IRelationshipProps } from "__Components/Relationship.Component";
 import Health from "__Components/Health.Component";
 import Coins from "__Components/Coins.Component";
 import Collider from "__Components/Collider.Component";
@@ -22,14 +23,21 @@ import handleRigidCollision from "__Utils/handleRigidCollision";
 import { Coordinate2d } from "__Types/Coordinate2d";
 
 export default class Player extends Entity {
-    facingDirection: PlayerDirection = PlayerDirection.s;
-    playerSpeed: number = 0.0035;
+    direction: PlayerDirection = PlayerDirection.s;
+    speed: number = 0.0035;
     room: number[] = [0, 0];
+
+    /* Animation lock for melee attacks */
+    meleeWeaponTag: string = "sword";
+    meleeTimeout: number = 0;
 
     constructor({ spawn = { x: 0, y: 0 } }: IPlayerProps) {
         super({ tag: "player", x: spawn.x, y: spawn.y });
 
-        const sprite = new Sprite({ src: Link_1, width: 1, height: 1 });
+        const sprite = new Sprite({
+            src: Link_1, width: 1, height: 1
+        });
+
         const health = new Health(3);
         const coins = new Coins(0);
         const collider = new Collider({
@@ -38,25 +46,6 @@ export default class Player extends Entity {
             initialPosition: spawn,
             onCollision: this.handleCollision.bind(this)
         });
-
-        const swordSides = [
-            { x: 0.45, y: -1, height: 1, width: 0.1 },
-            { x: 1, y: 0.45, height: 0.1, width: 1 },
-            { x: 0.45, y: 1, height: 1, width: 0.1 },
-            { x: -1, y: 0.45, height: 0.1, width: 1 },
-        ];
-
-        const swordHurtboxes = new ColliderGroup([
-            ...swordSides.map(props => ({
-                isEnabled: false, offset: { x: props.x, y: props.y },
-                component: new Collider({
-                    initialPosition: spawn,
-                    height: props.height, width: props.width,
-                    tag: "weapon",
-                    onCollision: this.handleWeaponCollision
-                })
-            }))
-        ])
 
         const movement = new Movement({
             x: 0, y: 0,
@@ -78,7 +67,6 @@ export default class Player extends Entity {
         this.addComponent(collider);
         this.addComponent(movement);
         this.addComponent(animation);
-        this.addComponent(swordHurtboxes);
 
         /* Inputs */
         const input = new Input({
@@ -87,7 +75,7 @@ export default class Player extends Entity {
                 "a": () => this.handleInputMovement(PlayerDirection.w),
                 "s": () => this.handleInputMovement(PlayerDirection.s),
                 "d": () => this.handleInputMovement(PlayerDirection.e),
-                "l": () => this.handleInputSword()
+                "l": () => this.handleMeleeInput()
             }
         });
         this.addComponent(input);
@@ -97,27 +85,24 @@ export default class Player extends Entity {
         const animation = this.getComponent(SpriteAnimation) as SpriteAnimation;
         const movement = this.getComponent(Movement) as Movement;
 
-        this.facingDirection = direction;
-        animation.changeState(`walking_${direction}`);
+        if (!this.meleeTimeout) {
+            this.direction = direction;
+            animation.changeState(`walking_${direction}`);
+        }
 
-        if (direction === PlayerDirection.n) movement.addSpeed(0, -this.playerSpeed);
-        if (direction === PlayerDirection.s) movement.addSpeed(0, this.playerSpeed);
-        if (direction === PlayerDirection.w) movement.addSpeed(-this.playerSpeed, 0);
-        if (direction === PlayerDirection.e) movement.addSpeed(this.playerSpeed, 0);
+        if (direction === PlayerDirection.n) movement.addSpeed(0, -this.speed);
+        if (direction === PlayerDirection.s) movement.addSpeed(0, this.speed);
+        if (direction === PlayerDirection.w) movement.addSpeed(-this.speed, 0);
+        if (direction === PlayerDirection.e) movement.addSpeed(this.speed, 0);
     }
 
-    handleInputSword = () => {
-        const swordHurtboxes = this.getComponent(ColliderGroup) as ColliderGroup;
-        swordHurtboxes.colliders[this.facingDirection].isEnabled = true;
-        setTimeout(() => {
-
-            swordHurtboxes.colliders[this.facingDirection].isEnabled = false;
-        }, 64);
+    handleMeleeInput = () => {
+        this.meleeTimeout = 150;
     }
 
     handleStop = () => {
         const animation = this.getComponent(SpriteAnimation) as SpriteAnimation;
-        animation.changeState(`standing_${this.facingDirection}`);
+        animation.changeState(`standing_${this.direction}`);
     }
 
     handleCollision(target: Entity, colliderTag: string) {
@@ -131,32 +116,16 @@ export default class Player extends Entity {
 
         if (isTargetRigid && !isTargetEnemy) handleRigidCollision(this, target);
     }
-
-    handleWeaponCollision(target: Entity, scene, direction: Coordinate2d) {
-        const isTargetEnemy = target.tag === "enemy";
-        if (!isTargetEnemy) return;
-
-        const health = target.getComponent(Health) as Health;
-        const movement = target.getComponent(Movement) as Movement;
-
-        if (!health.invincibleTime) {
-            const { x, y } = direction;
-            health.decrementHealth(1);
-            health.invincibleTime = 1500;
-            movement.setSpeed(x * 0.10, y * 0.10);
-            return;
-        }
-    }
 }
 
-interface IPlayerProps {
+export interface IPlayerProps {
     spawn: {
         x: number;
         y: number;
     }
 }
 
-enum PlayerDirection {
+export enum PlayerDirection {
     n,
     e,
     s,

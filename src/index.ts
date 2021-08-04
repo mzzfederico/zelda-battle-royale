@@ -9,6 +9,7 @@ import SystemEnemy from "./Systems/SystemEnemy";
 import SystemCoinMeter from "./Systems/SystemCoinMeter";
 import SystemDebugPlayer from "./Systems/SystemDebugPlayer";
 import SystemHealthMeter from "./Systems/SystemHealthMeter";
+import Sword from "./Entities/Sword";
 
 document.addEventListener('readystatechange', event => {
     if (event.target.readyState === "complete") {
@@ -43,9 +44,21 @@ function Main() {
     ].forEach(entity => game.currentScene.addEntity(entity));
 
     /* Spawn player */
+    const swordSides = [
+        { x: 0.45, y: -1, height: 0.85, width: 0.15 },
+        { x: 1, y: 0.45, height: 0.15, width: 0.85 },
+        { x: 0.45, y: 1, height: 0.85, width: 0.15 },
+        { x: -1, y: 0.45, height: 0.15, width: 0.85 },
+    ];
+
+    swordSides.forEach((side, index) => {
+        const sword = new Sword({ owner: player.id, posSize: side, direction: index });
+        game.currentScene.addEntity(sword);
+    });
+
     game.currentScene.addEntity(player);
     player.room = dungeon.roomIndex;
 
     game.start();
-    console.log(game.currentScene);
+    console.log(game.currentScene.entities);
 }

@@ -28,6 +28,17 @@ export default class SystemEnemy extends System {
             }
         ));
 
+        /* Handle weapon entities on melee time */
+        if (player.meleeTimeout !== 0) {
+            player.meleeTimeout = player.meleeTimeout > 0 ? Math.floor(player.meleeTimeout - time) : 0;
+            const meleeWeaponEntity = entities.find(entity => entity.tag === `${player.meleeWeaponTag}/${player.direction}`);
+            if (player.meleeTimeout !== 0) {
+                meleeWeaponEntity.isDisabled = false;
+            } else {
+                meleeWeaponEntity.isDisabled = true;
+            }
+        }
+
         /* Handle behaviours */
         (entities.filter(assertEmemy) as Enemy[]).forEach(
             (enemy: Enemy) => {
@@ -43,7 +54,6 @@ export default class SystemEnemy extends System {
                     }
 
                     this.reachPlayer(enemy, player);
-
                 }
 
                 if (enemyBehaviour.state === EnemyStrategies.AlignWithPlayer) {

@@ -9,7 +9,12 @@ import { DoorwayDirection } from "./Entities/Doorway";
 import RoomSet, { WallStateEnum } from "./Sets/Room.set";
 import CanvasRenderer from "../../engine/Systems/Canvas.System";
 import Collider from "../../engine/Components/Collider.Component";
-import Link_1 from "./Sprites/Link/1.png";
+
+import skeleton_1 from "./Sprites/skeleton/1.png";
+import skeleton_2 from "./Sprites/skeleton/2.png";
+
+import randomPosition from "../../engine/Utils/randomPosition";
+import Coin from "./Entities/Coin";
 
 const layoutTemplate = [
     ["", "", ""],
@@ -40,8 +45,24 @@ export default class Dungeon {
         this.layout.forEach((row, y) => {
             this.rooms[y] = [];
             row.forEach((column, x) => {
+                const coins = [];
+
+                let i = 12;
+                while (i > 0) {
+                    coins.push(
+                        new Coin(randomPosition(ROOM_WIDTH, ROOM_HEIGHT))
+                    );
+                    i--;
+                }
+
                 const roomContent = new RoomSet(
-                    [new Enemy({ spawn: { x: 3, y: 3 }, spriteSrc: Link_1 })],
+                    [
+                        ...coins,
+                        new Enemy({
+                            spawn: randomPosition(ROOM_WIDTH, ROOM_HEIGHT), spriteSrc: skeleton_1,
+                            animations: [{ name: 'loop', frames: [skeleton_1, skeleton_2], interval: 250, nextState: 'loop' }]
+                        })
+                    ],
                     [
                         y === 0 ? WallStateEnum.Closed : WallStateEnum.Open,
                         x === (this.width - 1) ? WallStateEnum.Closed : WallStateEnum.Open,

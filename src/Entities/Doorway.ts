@@ -18,8 +18,8 @@ export default class Doorway extends Entity {
         if (direction === DoorwayDirection.Top || direction === DoorwayDirection.Bottom) width = 2, height = 0.1;
         if (direction === DoorwayDirection.Left || direction === DoorwayDirection.Right) width = 0.1, height = 2;
 
-        const onCollision = (target) => {
-            if (target.tag === "player") {
+        const onCollision = (target, tag) => {
+            if (tag === "player") {
                 handleEntry(direction);
             }
         }

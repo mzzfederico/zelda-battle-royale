@@ -14,6 +14,6 @@ export default class Health extends Component {
     }
 
     decrementHealth(value) {
-        this.value -= value;
+        this.value = this.value > 0 ? this.value - value : 0;
     }
 }

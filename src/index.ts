@@ -5,7 +5,7 @@ import Dungeon from "./Dungeon";
 import Doorway, { DoorwayDirection } from "./Entities/Doorway";
 import Player from "./Entities/Player";
 import Room from "./Sets/Room.set";
-import EnemyAI from "./Systems/EnemyIA";
+import SystemEnemy from "./Systems/SystemEnemy";
 import SystemCoinMeter from "./Systems/SystemCoinMeter";
 import SystemDebugPlayer from "./Systems/SystemDebugPlayer";
 import SystemHealthMeter from "./Systems/SystemHealthMeter";
@@ -21,11 +21,11 @@ function Main() {
 
     const healthMeter = new SystemHealthMeter();
     const coinMeter = new SystemCoinMeter();
-    const enemyAI = new EnemyAI();
+    const systemEnemy = new SystemEnemy();
     /* To be disabled... */
     const debug = new SystemDebugPlayer();
 
-    const gameplayScene = new Scene("gameplay", [], [enemyAI, healthMeter, coinMeter, debug]);
+    const gameplayScene = new Scene("gameplay", [], [systemEnemy, healthMeter, coinMeter, debug]);
     const game = new GameLoop(gameplayScene);
     const dungeon = new Dungeon(game);
 
@@ -46,5 +46,6 @@ function Main() {
     game.currentScene.addEntity(player);
     player.room = dungeon.roomIndex;
 
+    game.start();
     console.log(game.currentScene);
 }

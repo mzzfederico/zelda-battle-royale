@@ -28,17 +28,7 @@ export default class RoomSet {
         ).flat();
 
 
-        const coins = [];
-
-        let i = 12;
-        while (i > 0) {
-            coins.push(
-                new Coin(randomPosition(ROOM_WIDTH, ROOM_HEIGHT))
-            );
-            i--;
-        }
-
-        this.contents = [floor, ...coins, ...walls, ...content];
+        this.contents = [floor, ...walls, ...content];
     }
 
     onDoorwayEntry: Function;

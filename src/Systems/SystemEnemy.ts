@@ -10,6 +10,7 @@ import Enemy from "__Entities/Enemy";
 import Health from "__Components/Health.Component";
 import { ROOM_HEIGHT, ROOM_WIDTH } from "../constants";
 import { Coordinate2d } from "../../../engine/Types/Coordinate2d";
+import Sprite from "../../../engine/Components/Sprite.Component";
 
 export default class SystemEnemy extends System {
     update(time: number, entities: Entity[]): void {
@@ -21,8 +22,14 @@ export default class SystemEnemy extends System {
         (entities.filter(entity => !!entity.getComponent(Health)).forEach(
             entity => {
                 const health = entity.getComponent(Health) as Health;
+                const sprite = entity.getComponent(Sprite) as Sprite;
                 if (!health) return;
                 health.invincibleTime = health.invincibleTime > 0 ? Math.floor(health.invincibleTime - time) : 0;
+                if (sprite && health.invincibleTime > 0) {
+                    sprite.isEnabled = !sprite.isEnabled;
+                } else {
+                    sprite.isEnabled = true;
+                }
                 if (health.value === 0) entity.setDisabled(true);
                 /* Handle time without damage */
             }

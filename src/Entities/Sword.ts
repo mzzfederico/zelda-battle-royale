@@ -37,7 +37,7 @@ export default class Sword extends Entity {
         if (!health.invincibleTime) {
             const { x, y } = direction;
             health.decrementHealth(this.swordDamage);
-            movement.setSpeed(x * 0.10, y * 0.10);
+            movement.setSpeed(x * 0.12, y * 0.12);
             health.invincibleTime = 500;
             return;
         }
